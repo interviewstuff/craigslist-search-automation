@@ -8,8 +8,8 @@ public interface InputParams {
 	public static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
 	public static final String HOST = "accounts.craigslist.org";
 	public static final String REFERER = "https://accounts.craigslist.org/login?rt=L&rp=/login/home";
-	public static final String INPUT_EMAIL_HANDLE = "justforchandu@gmail.com";
-	public static final String INPUT_PASSWORD = "@$Dec123";
+	public static final String INPUT_EMAIL_HANDLE = "chanduguthikonda@gmail.com";
+	public static final String INPUT_PASSWORD = "C!@#$handu";
 	public static final String WHICH_FOR = "login";
 	public static final String URL_LOGIN = "https://accounts.craigslist.org/login";
 	public static final String COOKIE_URL = "https://accounts.craigslist.org/login/home";
