@@ -1,16 +1,11 @@
-package com.craigslist.service.impl;
+package com.craigslist.pageobject;
 
-import static com.craigslist.utils.Locators.ACCOUNTFORM_BTN;
 import static com.craigslist.utils.Locators.CLASS_RESULT_TITLE_HDRLNK;
 import static com.craigslist.utils.Locators.CRAIGSLIST;
 import static com.craigslist.utils.Locators.ID_SAVEDSEARCHLIST;
 import static com.craigslist.utils.Locators.ID_SAVEDSEARCHLIST_TBODY;
 import static com.craigslist.utils.Locators.ID_SAVEDSEARCHLIST_TBODY_TR_X_TD_6_A;
 import static com.craigslist.utils.Locators.ID_SAVEDSEARCHLIST_TBODY_TR_X_TD_7_A;
-import static com.craigslist.utils.Locators.INPUT_EMAIL_HANDLE;
-import static com.craigslist.utils.Locators.INPUT_PASSWORD;
-import static com.craigslist.utils.Locators.LOG_OUT;
-import static com.craigslist.utils.Locators.MY_ACCOUNT;
 import static com.craigslist.utils.Locators.NEXT;
 import static com.craigslist.utils.Locators.QUERY;
 import static com.craigslist.utils.Locators.SAVE_SEARCH;
@@ -25,70 +20,29 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.testng.Assert;
 
 import com.craigslist.properties.CraigsListProperties;
-import com.craigslist.service.CraigsListSearchService;
+import com.craigslist.service.impl.CraigsListSearchServiceImpl;
 import com.craigslist.utils.UtilityLibrary;
 
-@Service
-public class CraigsListSearchServiceImpl implements CraigsListSearchService {
-
-
+public class Search {
+	
 	@Autowired
 	CraigsListProperties craigProps;
+	Login login;
 
 	private static final Logger logger = Logger.getLogger(CraigsListSearchServiceImpl.class);
-
-	/**
-	 * Method to login to craigs list 
-	 * @return boolean
-	 */	
-	@Override
-	public boolean login() throws Exception{
-		logger.info("Trying to Login");
-		boolean status = false;
-		try{
-			UtilityLibrary.driver.get(craigProps.getClurl());	
-			UtilityLibrary.driver.manage().window().maximize();
-			UtilityLibrary.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-
-			//click on my account to login
-			UtilityLibrary.driver.findElement(By.linkText(MY_ACCOUNT)).click();		
-
-			UtilityLibrary.driver.findElement(By.name(INPUT_EMAIL_HANDLE)).sendKeys(craigProps.getUserId());
-			UtilityLibrary.driver.findElement(By.name(INPUT_PASSWORD)).sendKeys(craigProps.getPass());
-			UtilityLibrary.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			UtilityLibrary.driver.findElements(By.className(ACCOUNTFORM_BTN)).get(0).click();
-
-			//check if login successfull
-
-			WebElement webelement = UtilityLibrary.driver.findElement(By.linkText(LOG_OUT));
-			if(webelement.getText().contains(LOG_OUT)){
-				logger.info("Login successfull");
-				status = true;
-			}
-		}catch(Exception ex){
-			UtilityLibrary.driver.close();
-			status = false;
-		}
-		return status;
-
-
-	}
-
-
+	
+	
 	/**
 	 * Method to search, print the result titles and saves the search
 	 * @param searchName
 	 * 
 	 */
-	@Override
 	public void saveSearch(String searchName) throws Exception {
 
-		Assert.assertTrue(login(),"Login failed...Please retry with  correct credentials");
+		Assert.assertTrue(login.login(),"Login failed...Please retry with  correct credentials");
 		//if login successfull navigate to craigslist home page
 		UtilityLibrary.driver.findElement(By.linkText(CRAIGSLIST)).click();
 		WebElement elements  = UtilityLibrary.driver.findElement(By.name(QUERY));
@@ -118,7 +72,6 @@ public class CraigsListSearchServiceImpl implements CraigsListSearchService {
 	 * @param String savedSearch
 	 * @return boolean 
 	 */
-	@Override
 	public boolean verifySavedSearch(String savedSearch) throws Exception{
 		//get all saved entries
 		List<WebElement> savedEntries = UtilityLibrary.driver.findElements(By.xpath(ID_SAVEDSEARCHLIST));
@@ -141,7 +94,6 @@ public class CraigsListSearchServiceImpl implements CraigsListSearchService {
 	 * @param String savedSearch 
 	 * @return boolean
 	 */
-	@Override
 	public boolean verifyEditSearch(String savedSearch, String newString) throws Exception{
 		boolean status = false;
 		try{
@@ -171,6 +123,8 @@ public class CraigsListSearchServiceImpl implements CraigsListSearchService {
 			status = verifySavedSearch(newString);
 		}catch(NoSuchElementException ex){
 			logger.error("Not able to find the web element "+ex.getMessage());
+		}catch(Exception ex){
+			logger.error(ex.getMessage());
 		}
 		return status;
 	}
@@ -197,9 +151,11 @@ public class CraigsListSearchServiceImpl implements CraigsListSearchService {
 			status = verifySavedSearch(deleteParam);
 		}catch(NoSuchElementException ex){
 			logger.error("Not able to find the web element "+ex.getMessage());
+		}catch(Exception ex){
+			logger.error(ex.getMessage());
 		}
+		
 		return status;
 	}
-
 
 }

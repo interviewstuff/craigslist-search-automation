@@ -8,26 +8,10 @@
  <context:component-scan   base-package="com.craigslist" ></context:component-scan>
 
 <bean id = "CraigsListSearchServiceImpl" class="com.craigslist.service.impl.CraigsListSearchServiceImpl"/>
+<bean id = "Login" class="com.craigslist.pageobject.Login"/>
+<bean id = "Search" class="com.craigslist.pageobject.Search"/>
 
 	<bean
 		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-		<!-- <property name="locations">
-			<list>
-				<value>mensSingles.properties</value>
-				<value>womensSingles.properties</value>
-				<value>liveScoreboard1.properties</value>
-				<value>completed1.properties</value>
-				<value>tschedule.properties</value>
-				<value>myPlayers.properties</value>
-				<value>craigslist.properties</value>
-			</list>
-		</property> -->
 	</bean>
-	<!-- <bean id="craigsListBean"
-		class="com.craigslist.properties.CraigsListProperties">
-		<property name="clurl" value="${clurl}"></property>
-		<property name="userId" value="${userId}"></property>
-		<property name="pass" value="${pass}"></property>
-	</bean> -->
-	
 </beans>

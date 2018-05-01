@@ -1,6 +1,9 @@
 package com.craigslist.utils;
 
 
+import static io.restassured.RestAssured.given;
+import io.restassured.http.Cookies;
+
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
@@ -24,6 +27,18 @@ public class UtilityLibrary {
 		else{
 			System.err.println("Invalid driver");
 		}
+	}
+	
+	
+	public static String generateCSRF(String url, Cookies allCookies){
+		String csrf = given()
+				.header("Accept", "text/javascript, */*; q=0.01")
+				.header("X-Requested-With", "XMLHttpRequest")
+				.header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+				.cookies(allCookies)
+				.when()
+				.get("https://accounts.craigslist.org/session/?v=1").jsonPath().get("csrf");
+		return csrf;
 	}
 	
 	public static void quitBrowser(){

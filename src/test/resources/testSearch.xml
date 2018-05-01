@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Completed" parallel="false"> 
-  <listeners>
-      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
-      <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
-     <!--  <listener class-name="com.directv.playerbio.impl.ReporterListener" />  -->          
-  </listeners> 
+<suite name="CraigsList Test" parallel="false"> 
 
   <test name="Craigs List: Search Test">
   <parameter name="browser" value="chrome"/>

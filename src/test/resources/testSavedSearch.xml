@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Craigs List Test" parallel="false"> 
+
+  <test name="Test">
+	<parameter name="browser" value="chrome"/>
+	<parameter name="savedSearch" value="toyota"/>
+	<parameter name="newValue" value="toyota prius"/>
+	    <classes>
+	       <class name="com.craigslist.search.test.LoginTest"/>
+	       <class name="com.craigslist.search.test.SearchTest" />
+	    </classes>
+  </test>
+  
+  
+  <!-- <test name="Test2">
+	<parameter name="savedSearch" value="toyota"/>
+	    <classes>
+	       <class name="com.craigslist.pageobject.SearchTest" />
+	    </classes>
+  </test> -->
+  <!--WE CAN FURTHER DE-COUPLE THE TESTS BY DEFINING THE TEST CLASSES IN TWO DIFFERENT <test>  -->
+  
+</suite>

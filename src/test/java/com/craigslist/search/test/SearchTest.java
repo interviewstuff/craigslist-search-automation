@@ -11,44 +11,34 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.craigslist.service.CraigsListSearchService;
+import com.craigslist.pageobject.Search;
 import com.craigslist.utils.UtilityLibrary;
 
 @RunWith(SpringRunner.class)
-
-public class TestCraigsListSearch {
-	
-	
-	private CraigsListSearchService clsService;
+public class SearchTest {
 	
 	static ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-	
-	private static final Logger logger = Logger.getLogger(TestCraigsListSearch.class);
+	private static final Logger logger = Logger.getLogger(SearchTest.class);
+	private Search search;
 	
 	@BeforeTest
 	@Parameters({"browser","savedSearch"})
 	public void setUp(String browser,String savedSearch) throws Exception{
-		clsService = (CraigsListSearchService) context.getBean("CraigsListSearchServiceImpl");
-		UtilityLibrary.openBrowser(browser);
-		logger.info("Browser Opened Successfully");
+		search = (Search) context.getBean("Search");
 	}
 	
-	@Test(priority=0)
-	public void testLogin() throws Exception{
-		Assert.assertTrue(clsService.login());
-	}
-	
-	@Test(priority=1, dependsOnMethods = { "testLogin" })
+	@Test(priority=1)
 	@Parameters({"savedSearch","newValue"})
 	public void testEditSavedSearch(String savedSearch, String newValue) throws Exception{
-		Assert.assertTrue(clsService.verifyEditSearch(savedSearch, newValue), "Newly edited value not found");
+		logger.info("Renaming search item in progress......"); 
+		Assert.assertTrue(search.verifyEditSearch(savedSearch, newValue), "Newly edited value not found");
 		logger.info("Edit  Search Item Verification Completed Successfully with New Value "+ newValue);
 	}
 	
 	@Test(priority=2, dependsOnMethods = { "testEditSavedSearch" })
 	@Parameters({"newValue"})
 	public void testDeleteSavedSearch(String newValue) throws Exception{
-		Assert.assertFalse(clsService.deleteSearchItem(newValue), "Search item " +newValue+" not deleted");		
+		Assert.assertFalse(search.deleteSearchItem(newValue), "Search item " +newValue+" not deleted");		
 		logger.info("Delete Search Item Verification Completed Successfully with New Value "+ newValue);
 	}
 	
@@ -57,7 +47,6 @@ public class TestCraigsListSearch {
 		UtilityLibrary.quitBrowser();
 		logger.info("Browser Closed Successfully");
 	}
-	
-		
+
 
 }

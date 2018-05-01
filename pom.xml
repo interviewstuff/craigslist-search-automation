@@ -19,6 +19,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>3.0.2</version>
+			<!-- <scope>test</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
@@ -28,7 +39,7 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -84,11 +95,11 @@
 			<version>3.0.0</version>
 		</dependency>
 		<dependency>
-	    <groupId>org.springframework</groupId>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			
+
 			<version>${spring.version}</version>
-	   </dependency>
+		</dependency>
 
 	</dependencies>
 	<repositories>
@@ -97,7 +108,7 @@
 			<url>https://code.lds.org/nexus/content/groups/main-repo</url>
 		</repository>
 		<repository>
-	
+
 			<id>java-net</id>
 			<url>http://download.java.net/maven/2</url>
 		</repository>
@@ -136,18 +147,19 @@
 							<name>usedefaultlisteners</name>
 							<value>false</value>
 						</property>
-						<property>
+						<!-- <property>
 							<name>listener</name>
-							<value>org.uncommons.reportng.HTMLReporter, org.uncommons.reportng.JUnitXMLReporter</value>
-						</property>
+							<value>org.uncommons.reportng.HTMLReporter,
+								org.uncommons.reportng.JUnitXMLReporter</value>
+						</property> -->
 					</properties>
-					
+
 					<workingDirectory>target/</workingDirectory>
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/${TESTNG_FILE}</suiteXmlFile>	
+						<suiteXmlFile>src/test/resources/${TESTNG_FILE}</suiteXmlFile>
 					</suiteXmlFiles>
 					<testFailureIgnore>true</testFailureIgnore>
-					
+
 				</configuration>
 			</plugin>
 		</plugins>
